@@ -36,7 +36,7 @@ public class Person : MonoBehaviour
             if (!usernameCanvas.activeSelf) usernameCanvas.SetActive(true);
             FollowerWander();
         }
-        ClampPositionAndRotation();
+        //ClampPositionAndRotation();
     }
 
     public void DisplayText()
@@ -46,13 +46,13 @@ public class Person : MonoBehaviour
 
     void PersonWander()
     {
-        if (Vector3.Distance(targetPosition, transform.position) > .1f)
+        if (Vector3.Distance(targetPosition, transform.position) > .001f)
         {
             FaceAndMoveTo(targetPosition, moveSpeed * Time.deltaTime);
         }
         else
         {
-            targetPosition = new Vector3(Random.Range(minX, maxX), transform.position.y, Random.Range(minZ, maxZ));
+            targetPosition = new Vector3(Random.Range(minX, maxX), 0, Random.Range(minZ, maxZ));
         }
     }
 
@@ -97,13 +97,12 @@ public class Person : MonoBehaviour
     void FaceAndMoveTo(Vector3 target, float travelSpeed)
     {
         Vector3 targetDir = target - transform.position;
-        if (Vector3.Angle(targetDir, transform.forward) >= .1f)
+        if (Vector3.Angle(targetDir, transform.forward) >= .001f)
         {
             Face(rotateSpeed * Time.deltaTime, targetDir);
         }
         else
-        {
-            float maxSpeed = moveSpeed * Time.deltaTime;
+        { 
             transform.position = Vector3.MoveTowards(transform.position, target, travelSpeed);
         }
     }
