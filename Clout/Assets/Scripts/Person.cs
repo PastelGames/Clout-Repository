@@ -29,12 +29,12 @@ public class Person : MonoBehaviour
     {
         if (!follower)
         {
-            PersonWander();
+            
         }
         else
         {
             if (!usernameCanvas.activeSelf) usernameCanvas.SetActive(true);
-            FollowerWander();
+            
         }
         //ClampPositionAndRotation();
     }
