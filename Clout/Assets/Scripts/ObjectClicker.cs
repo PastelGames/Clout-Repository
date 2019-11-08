@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class ObjectClicker : MonoBehaviour
 {
-    public GameObject gameplay;
+    public Gameplay gameplay;
+    public PhoneContent phoneContent;
+    public AudioSource notificationSound;
 
     // Start is called before the first frame update
     void Start()
-    { 
+    {
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !gameplay.PhoneCanvas.gameObject.activeSelf)
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -23,12 +26,38 @@ public class ObjectClicker : MonoBehaviour
             {
                 if (hit.transform != null &
                     hit.transform.gameObject.tag == "Person")
-                { 
+                {
+                    gameplay.SwitchCanvases();
                     if (hit.transform.gameObject.GetComponent<Person>().follower == false) {
                         hit.transform.gameObject.GetComponent<Person>().follower = true;
-                        gameplay.GetComponent<Gameplay>().followers++;
+                        notificationSound.Play();
+                        if (gameplay.activePerson != hit.transform.gameObject)
+                        {
+                            phoneContent.Repopulate(
+                                hit.transform.gameObject.GetComponent<Person>().posts);
+                        }
+                        gameplay.activePerson = hit.transform.gameObject;
+                        gameplay.person = gameplay.activePerson.GetComponent<Person>();
+                        gameplay.person.likePoints =
+                            gameplay.person.maxLikePoints / 2;
+                        if (gameplay.person && !gameplay.person.postsInstantiated)
+                        {
+                            
+                            phoneContent.Populate(gameplay.person.posts);
+                            gameplay.person.FirstInteraction();
+                        } 
+               
                     }
-                    gameplay.GetComponent<Gameplay>().SwitchCanvases();
+                    else
+                    {
+                        if (gameplay.activePerson != hit.transform.gameObject)
+                        {
+                            phoneContent.Repopulate(hit.transform.gameObject.GetComponent<Person>().posts);
+                            gameplay.activePerson = hit.transform.gameObject;
+                            gameplay.person = gameplay.activePerson.GetComponent<Person>();
+                        }
+                    }
+
                 }
             }
 

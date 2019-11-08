@@ -7,6 +7,8 @@ TagManager:
   - Person
   - Fire
   - Room
+  - Content
+  - Gameplay
   layers:
   - Default
   - TransparentFX
