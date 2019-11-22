@@ -172,9 +172,7 @@ public class Gameplay : MonoBehaviour
 
     IEnumerator PauseHUD()
     {
-        Debug.Log("hire");
         yield return new WaitForSeconds(3.4f);
-        Debug.Log("here");
         FPSCanvas.gameObject.SetActive(true);
     }
 
