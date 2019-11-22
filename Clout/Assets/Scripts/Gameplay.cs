@@ -28,7 +28,7 @@ public class Gameplay : MonoBehaviour
     public List<string> usernamesList;
     public GameObject personPrefab;
     public int numPeople;
-    List<GameObject> people;
+    public List<GameObject> people;
     public AudioClip cloutedUp;
     public AudioClip cloutHalf;
     public AudioClip lonely;
@@ -160,9 +160,9 @@ public class Gameplay : MonoBehaviour
     int FollowerCount()
     {
         int totalFollowers = 0;
-        foreach(GameObject person in people)
+        foreach(GameObject person1 in people)
         {
-            if(person.GetComponent<Person>().follower)
+            if(person1.GetComponent<Person>().follower)
             {
                 totalFollowers++;
             }

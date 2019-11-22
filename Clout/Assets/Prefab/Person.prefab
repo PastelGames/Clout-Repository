@@ -520,7 +520,7 @@ MonoBehaviour:
   username: '@Dumbass'
   usernameText: {fileID: 3826321448553217021}
   slider: {fileID: 3826321449426156643}
-  likePointsDecreaseRate: 6
+  likePointsDecreaseRate: 4
   currentLikePercentage: 0
   posts: []
   textPost: {fileID: 7399882447984646, guid: d5ca86362368b4dbbae7a876b7d1432f, type: 3}

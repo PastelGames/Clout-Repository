@@ -7,6 +7,7 @@ public class ObjectClicker : MonoBehaviour
     public Gameplay gameplay;
     public PhoneContent phoneContent;
     public AudioSource notificationSound;
+    public Notifications notifications;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,8 @@ public class ObjectClicker : MonoBehaviour
                     if (hit.transform.gameObject.GetComponent<Person>().follower == false) {
                         hit.transform.gameObject.GetComponent<Person>().follower = true;
                         notificationSound.Play();
+                        notifications.GiveUserFeedback(hit.transform.gameObject.GetComponent<Person>().username
+                            + " just followed you!", Color.green, 5f);
                         if (gameplay.activePerson != hit.transform.gameObject)
                         {
                             phoneContent.Repopulate(

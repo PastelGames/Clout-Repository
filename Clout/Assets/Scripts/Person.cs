@@ -27,6 +27,7 @@ public class Person : MonoBehaviour
     public bool postsInstantiated;
     public PhoneContent phoneContent;
     Gameplay gameplay;
+    public Notifications notifications;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +56,8 @@ public class Person : MonoBehaviour
                 follower = false;
                 usernameCanvas.SetActive(false);
                 gameplay.notificationSound.Play();
+                notifications = GameObject.Find("Notifications").GetComponent<Notifications>();
+                notifications.GiveUserFeedback(username + " just unfollowed you.", Color.red, 5f);
             }
         }
         else
