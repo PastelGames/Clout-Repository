@@ -22,24 +22,38 @@ public class Person : MonoBehaviour
     public GameObject photoPost;
     public Sprite dummyImage;
     public int postsLength = 30;
-    public Material nonFollowerMaterial;
+    Material nonFollowerMaterial;
     public Material followerMaterial;
     public bool postsInstantiated;
     public PhoneContent phoneContent;
     Gameplay gameplay;
     public Notifications notifications;
+    public GameObject hair;
+    public GameObject torso;
+    public Material source;
+    //public List<Mesh> hairMeshes;
+    Material nonFollowerHairMaterial;
 
     // Start is called before the first frame update
     void Start()
     {
-        usernameCanvas = transform.GetChild(0).gameObject;
+        usernameCanvas = transform.Find("Username Canvas").gameObject;
         popularityMin = Random.Range(0, 10000);
         popularityDegree = Random.Range(0, 5000);
         slider.maxValue = maxLikePoints;
         GenerateRandomPosts(postsLength);
+        nonFollowerMaterial = new Material(source);
+        followerMaterial = source;
         Color nonFollowerColor = UnityEngine.Random.ColorHSV();
+        Color hairColor = UnityEngine.Random.ColorHSV();
+        Debug.Log(hairColor.ToString());
+        Debug.Log(nonFollowerColor.ToString());
+        nonFollowerHairMaterial = new Material(source);
+        nonFollowerHairMaterial.color = hairColor;
         nonFollowerColor.a = .5f;
         nonFollowerMaterial.color = nonFollowerColor;
+        //hair.GetComponent<MeshFilter>().mesh = ChooseRandomMesh(hairMeshes);
+        //hair.GetComponent<MeshCollider>().sharedMesh = ChooseRando
     }
 
     // Update is called once per frame
@@ -47,7 +61,8 @@ public class Person : MonoBehaviour
     {
         if (follower)
         {
-            GetComponent<MeshRenderer>().material = followerMaterial;
+            hair.GetComponent<MeshRenderer>().material = followerMaterial;
+            torso.GetComponent<SkinnedMeshRenderer>().material = followerMaterial;
             if (!usernameCanvas.activeSelf) usernameCanvas.SetActive(true);
             slider.value = likePoints;
             likePoints -= Time.deltaTime * likePointsDecreaseRate;
@@ -62,11 +77,17 @@ public class Person : MonoBehaviour
         }
         else
         {
-            GetComponent<MeshRenderer>().material = nonFollowerMaterial;
+            torso.GetComponent<SkinnedMeshRenderer>().material = nonFollowerMaterial;
+            hair.GetComponent<MeshRenderer>().material = nonFollowerHairMaterial;
         }
         likePoints = Mathf.Clamp(likePoints, 0, maxLikePoints);
         currentLikePercentage = likePoints / maxLikePoints;
     }
+
+    //Mesh ChooseRandomMesh(List<Mesh> mesh)
+    //{
+    //    //return hairMeshes[Random.Range(0, hairMeshes.Count - 1)];
+    //}
 
     void GenerateRandomPosts(int numPosts)
     {

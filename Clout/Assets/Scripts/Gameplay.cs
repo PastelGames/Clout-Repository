@@ -57,6 +57,13 @@ public class Gameplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            //return to the main menu
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+            GetComponent<SceneHandler>().ReturnToMain();
+        }
         FollowerCountTextUpdate();
         if (activePerson)
         {

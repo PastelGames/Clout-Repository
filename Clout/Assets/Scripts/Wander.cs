@@ -14,6 +14,7 @@ public class Wander : MonoBehaviour
     CharacterController controller;
     float heading;
     Vector3 targetRotation;
+    Animation walkingAni;
 
     bool moving = true;
 
@@ -27,6 +28,7 @@ public class Wander : MonoBehaviour
         transform.eulerAngles = new Vector3(0, heading, 0);
         StartCoroutine(NewHeading());
         StartCoroutine(WanderWait());
+        walkingAni = transform.Find("Person Model").GetComponent<Animation>();
     }
 
     void Update()
@@ -38,6 +40,15 @@ public class Wander : MonoBehaviour
             controller.SimpleMove(forward * speed);
             Vector3 clampedPosition = new Vector3(Mathf.Clamp(transform.position.x, -4, 4), transform.position.y, Mathf.Clamp(transform.position.z, -4, 4));
             transform.position = clampedPosition;
+            if (!walkingAni.isPlaying)
+            {
+                walkingAni.Play();
+                walkingAni["Take 001"].speed = 5;
+            }
+        }
+        else
+        {
+            walkingAni.Stop();
         }
     }
 
